@@ -1,6 +1,8 @@
 import { bombConfig } from "./collactable";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   scene: Phaser.Scene;
+  stepWidth: number;
+  jumpHeight: number;
 
   constructor(scene, x, y, textureName) {
     super(scene, x, y, textureName);
@@ -10,6 +12,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setCollideWorldBounds(true);
     this.setBounce(0.2);
     this.createAnimation(this.scene);
+    this.stepWidth = 160;
+    this.jumpHeight = -330;
     // this.init();
   }
   init() {}
@@ -37,12 +41,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   hitBomb(player, obj) {
     let scene: any = player.scene;
     scene.physics.pause();
-
     player.setTint(0xff0000);
-
     player.anims.play("turn");
-
     scene.state = true;
+  }
+  move(cursors) {
+    if (cursors.left.isDown) {
+      this.setVelocityX(-this.stepWidth);
+
+      this.anims.play("left", true);
+    } else if (cursors.right.isDown) {
+      this.setVelocityX(this.stepWidth);
+
+      this.anims.play("right", true);
+    } else {
+      this.setVelocityX(0);
+
+      this.anims.play("turn");
+    }
+
+    if (cursors.up.isDown && this.body.touching.down) {
+      this.setVelocityY(this.jumpHeight);
+    }
   }
 
   createAnimation(scene) {

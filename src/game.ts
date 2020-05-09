@@ -9,8 +9,6 @@ import Menu from "./menu";
 import Collactable from "./collactable";
 import { starConfig } from "./collactable";
 
-let cursors;
-
 export default class MainScene extends Phaser.Scene {
   player: Player;
   map: Map;
@@ -18,6 +16,7 @@ export default class MainScene extends Phaser.Scene {
   stars: Collactable;
   bombs: Collactable;
   state: false;
+  cursors: Phaser.Types.Input.Keyboard.CursorKeys;
 
   constructor() {
     super({ key: "Mainscene" });
@@ -44,7 +43,7 @@ export default class MainScene extends Phaser.Scene {
     this.player = new Player(this, 100, 450, "dude");
 
     //  Input Events
-    cursors = this.input.keyboard.createCursorKeys();
+    this.cursors = this.input.keyboard.createCursorKeys();
 
     // bombs = this.physics.add.group();
 
@@ -53,7 +52,6 @@ export default class MainScene extends Phaser.Scene {
     this.physics.add.collider(this.stars.object, this.map.platforms);
     this.physics.add.collider(this.bombs.object, this.map.platforms);
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     this.physics.add.overlap(
       this.player,
       this.stars.object,
@@ -74,24 +72,7 @@ export default class MainScene extends Phaser.Scene {
     if (this.state) {
       return;
     }
-
-    if (cursors.left.isDown) {
-      this.player.setVelocityX(-160);
-
-      this.player.anims.play("left", true);
-    } else if (cursors.right.isDown) {
-      this.player.setVelocityX(160);
-
-      this.player.anims.play("right", true);
-    } else {
-      this.player.setVelocityX(0);
-
-      this.player.anims.play("turn");
-    }
-
-    if (cursors.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
-    }
+    this.player.move(this.cursors);
   }
 }
 
