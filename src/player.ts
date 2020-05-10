@@ -3,6 +3,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   scene: Phaser.Scene;
   stepWidth: number;
   jumpHeight: number;
+  accelartion: number;
+  direction: number;
+
+  /**
+   * 
+    var group = this.physics.add.group({
+        key: 'ball',
+        frameQuantity: 48,
+        bounceX: 1,
+        bounceY: 1,
+        collideWorldBounds: true,
+        velocityX: 180,
+        velocityY: 120,
+    });
+   */
 
   constructor(scene, x, y, textureName) {
     super(scene, x, y, textureName);
@@ -10,10 +25,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
     this.setCollideWorldBounds(true);
-    this.setBounce(0.2);
+
+    // this.body.onWorldBounds = true;
+    /**typscript hack to set onWorldBounds to true */
+    (this.body
+      .onWorldBounds as Phaser.Physics.Arcade.Body["onWorldBounds"]) = true;
+    this.setMaxVelocity(1000);
+    this.setBounce(1, 0.2);
     this.createAnimation(this.scene);
+    // this.debugShowVelocity = true;
     this.stepWidth = 160;
     this.jumpHeight = -330;
+    this.accelartion = 100;
+    this.direction = 1;
     // this.init();
   }
   init() {}
@@ -48,15 +72,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   move(cursors) {
     if (cursors.left.isDown) {
       this.setVelocityX(-this.stepWidth);
-
       this.anims.play("left", true);
     } else if (cursors.right.isDown) {
       this.setVelocityX(this.stepWidth);
-
       this.anims.play("right", true);
+    } else if (cursors.space.isDown) {
+      this.setAccelerationX(this.accelartion * this.direction);
     } else {
-      this.setVelocityX(0);
-
+      // this.setVelocityX(0);
       this.anims.play("turn");
     }
 

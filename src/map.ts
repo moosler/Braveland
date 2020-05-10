@@ -1,9 +1,14 @@
 export default class Map {
   scene: Phaser.Scene;
   platforms: any;
+  width: number;
+  height: number;
+
   constructor(scene) {
     this.scene = scene;
     this.platforms = scene.physics.add.staticGroup();
+    this.width = 800;
+    this.height = 600;
     this.init();
   }
   init() {

@@ -35,17 +35,20 @@ export default class MainScene extends Phaser.Scene {
 
   create() {
     this.add.image(400, 300, "sky");
-    this.map = new Map(this);
     this.menu = new Menu(this);
+    this.map = new Map(this);
+    this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
+    this.physics.world.setBounds(0, 0, this.map.width, this.map.height);
+    this.physics.world.setBoundsCollision(true, true, true, false);
+
     // this.player.collectStar(1);
     this.stars = new Collactable(this, starConfig);
     this.bombs = new Collactable(this, {});
     this.player = new Player(this, 100, 450, "dude");
+    this.cameras.main.startFollow(this.player, true, 0.05, 0.05);
 
     //  Input Events
     this.cursors = this.input.keyboard.createCursorKeys();
-
-    // bombs = this.physics.add.group();
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, this.map.platforms);
@@ -66,6 +69,17 @@ export default class MainScene extends Phaser.Scene {
       this.player.hitBomb,
       null,
       this
+    );
+    console.log(this);
+    console.log(this.player);
+    this.physics.world.on(
+      "worldbounds",
+      function () {
+        this.direction *= -1;
+        // this.setAccelerationX(this.accelartion * -1);
+        console.log("Hit World Bound");
+      },
+      this.player
     );
   }
   update() {
@@ -90,9 +104,10 @@ const config = {
     default: "arcade",
     arcade: {
       gravity: { y: 300 },
-      debug: false,
+      debug: true,
     },
   },
 };
 
 const game = new Phaser.Game(config);
+console.log(game.scene.scenes);
