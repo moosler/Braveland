@@ -33,14 +33,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setMaxVelocity(1000);
     this.setBounce(1, 0.2);
     this.createAnimation(this.scene);
+    this.setDamping(true);
+    this.setDrag(0.98, 1);
     // this.debugShowVelocity = true;
     this.stepWidth = 160;
     this.jumpHeight = -330;
-    this.accelartion = 100;
+    this.accelartion = 500;
     this.direction = 1;
     // this.init();
   }
   init() {}
+  bounce() {
+    let scene: any = this.scene;
+    let width = scene.map.width;
+    let height = scene.map.height;
+    this.direction *= -1;
+
+    // if (this.x >= width && this.direction > 0) {
+    //   console.log("sdf");
+
+    //   this.direction *= -1;
+    // }
+  }
   collectStar(player, obj) {
     let scene: any = player.scene;
     let bombs: any = scene.bombs;
@@ -80,6 +94,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setAccelerationX(this.accelartion * this.direction);
     } else {
       // this.setVelocityX(0);
+      this.setAccelerationX(0);
       this.anims.play("turn");
     }
 

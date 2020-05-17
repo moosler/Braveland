@@ -34,7 +34,7 @@ export default class MainScene extends Phaser.Scene {
   }
 
   create() {
-    this.add.image(400, 300, "sky");
+    // this.add.image(400, 300, "sky");
     this.menu = new Menu(this);
     this.map = new Map(this);
     this.cameras.main.setBounds(0, 0, this.map.width, this.map.height);
@@ -70,14 +70,10 @@ export default class MainScene extends Phaser.Scene {
       null,
       this
     );
-    console.log(this);
-    console.log(this.player);
     this.physics.world.on(
       "worldbounds",
       function () {
-        this.direction *= -1;
-        // this.setAccelerationX(this.accelartion * -1);
-        console.log("Hit World Bound");
+        this.bounce();
       },
       this.player
     );
@@ -110,4 +106,4 @@ const config = {
 };
 
 const game = new Phaser.Game(config);
-console.log(game.scene.scenes);
+// console.log(game.scene.scenes);
