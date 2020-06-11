@@ -37,7 +37,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDrag(0.97, 1);
     // this.debugShowVelocity = true;
     this.speed = 160;
-    this.jumpHeight = -330;
+    this.jumpHeight = 330;
     this.accelartion = 500;
     this.direction = 1;
 
@@ -83,6 +83,9 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //   this.setVelocityY(this.jumpHeight);
     // }
   }
+  jump() {
+    this.body.velocity.y = -this.jumpHeight;
+  }
   handleCollision(player, layer) {
     let blockedDown = player.body.blocked.down;
     let blockedLeft = player.body.blocked.left;
@@ -98,11 +101,16 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     //Animations
     if (velX <= 50 && velX >= -50) {
       player.anims.play("turn");
+      // player.body.velocity.x = 0;
     } else if (velX > 10) {
       player.anims.play("right");
     } else if (velX < -10) {
       player.anims.play("left");
     }
+  }
+
+  handleDynamicCollision(player, layer) {
+    console.log("collision2");
   }
 
   createAnimation(scene) {
