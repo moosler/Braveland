@@ -1,17 +1,21 @@
 # Description
 
 Braveland is a simple platform game.
-By guiding Luna through the wild landscape of BraveLand.
+By guiding the Hero through the wild landscape of BraveLand.
 
-# FEATURES
+## FEATURES
 
 - Simple gameplay with one touch controller.
 
-# HOW TO PLAY
+## HOW TO PLAY
 
 - Touch and hold to move forward
 
-# Run Phaser 3 TypeScript Project Template
+## Links
+
+[emanueleferonato](https://www.emanueleferonato.com/2019/04/05/html5-platformer-prototype-inspired-by-ios-hit-yeah-bunny-thanks-to-phaser-and-arcade-physics-the-trampoline-tile/)
+
+## Run Phaser 3 TypeScript Project Template
 
 This quick-start project template combines Phaser 3 with [TypeScript](https://www.typescriptlang.org/) and uses [Rollup](https://rollupjs.org) for bundling.
 

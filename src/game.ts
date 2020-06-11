@@ -31,6 +31,7 @@ export default class MainScene extends Phaser.Scene {
     this.load.image("ground", "assets/platform.png");
     this.load.image("star", "assets/star.png");
     this.load.image("bomb", "assets/bomb.png");
+    this.load.tilemapTiledJSON("level", "maps/level.json");
   }
 
   create() {
@@ -88,14 +89,18 @@ export default class MainScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.AUTO,
-  backgroundColor: "#125555",
+  backgroundColor: "#444444",
   width: 800,
   height: 600,
   scene: MainScene,
-  parent: "phaser-example",
-  //   physics: {
-  //     default: "matter",
-  //   },
+  parent: "Braveland",
+  scale: {
+    mode: Phaser.Scale.FIT,
+    autoCenter: Phaser.Scale.CENTER_BOTH,
+    parent: "thegame",
+    width: 800,
+    height: 600,
+  },
   physics: {
     default: "arcade",
     arcade: {

@@ -1,12 +1,14 @@
 export default class Map {
   scene: Phaser.Scene;
   platforms: any;
+  spikes: Phaser.Physics.Arcade.StaticGroup;
   width: number;
   height: number;
 
   constructor(scene) {
     this.scene = scene;
     this.platforms = scene.physics.add.staticGroup();
+    this.spikes = scene.physics.add.staticGroup();
     this.width = 1800;
     this.height = 600;
     this.init();
