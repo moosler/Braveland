@@ -10,7 +10,7 @@ export default class MainScene extends Phaser.Scene {
   menu: Menu;
   stars: Collactable;
   bombs: Collactable;
-  state: false;
+  state: boolean;
   cursors: Phaser.Types.Input.Keyboard.CursorKeys;
   newMap: Phaser.Tilemaps.Tilemap;
 
@@ -41,15 +41,15 @@ export default class MainScene extends Phaser.Scene {
 
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(this.player, layer, this.player.handleCollision);
-    this.physics.add.collider(this.stars.object, layer);
-    this.physics.add.collider(this.bombs.object, layer);
-    this.physics.add.collider(
-      this.player,
-      this.bombs.object,
-      this.player.hitBomb,
-      null,
-      this
-    );
+    // this.physics.add.collider(this.stars.object, layer);
+    // this.physics.add.collider(this.bombs.object, layer);
+    // this.physics.add.collider(
+    //   this.player,
+    //   this.bombs.object,
+    //   this.player.hitBomb,
+    //   null,
+    //   this
+    // );
 
     this.physics.add.overlap(
       this.player,
@@ -69,7 +69,16 @@ export default class MainScene extends Phaser.Scene {
   }
   update() {
     // check which tile the hero is on
-    let tile = this.map.map.getTileAtWorldXY(this.player.x, this.player.y);
+    let tile = this.map.tilemap.getTileAtWorldXY(
+      this.player.x,
+      this.player.y,
+      true
+    );
+    console.log(tile.index);
+    if (!tile) {
+      this.state = true;
+    }
+
     if (this.state) {
       return;
     }

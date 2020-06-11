@@ -24,7 +24,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.scene = scene;
     this.scene.add.existing(this);
     this.scene.physics.add.existing(this);
-    this.setCollideWorldBounds(true);
+    // this.setCollideWorldBounds(true);
 
     // this.body.onWorldBounds = true;
     /**typscript hack to set onWorldBounds to true */
@@ -34,12 +34,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setBounce(1, 0.2);
     this.createAnimation(this.scene);
     this.setDamping(true);
-    this.setDrag(0.98, 1);
+    this.setDrag(0.97, 1);
     // this.debugShowVelocity = true;
     this.speed = 160;
     this.jumpHeight = -330;
     this.accelartion = 500;
     this.direction = 1;
+
     // this.init();
   }
   init() {}
@@ -76,7 +77,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
       this.setAccelerationX(this.accelartion * this.direction);
     } else {
       this.setAccelerationX(0);
-      this.anims.play("turn");
     }
 
     // if (cursors.up.isDown && this.body.touching.down) {
@@ -88,12 +88,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     let blockedLeft = player.body.blocked.left;
     let blockedRight = player.body.blocked.right;
     if (blockedRight) {
-      this.direction = -1;
+      player.direction = -1;
     }
     if (blockedLeft) {
-      this.direction = 1;
+      player.direction = 1;
     }
-    console.log(this.direction);
+    let velX = player.body.velocity.x;
+
+    //Animations
+    if (velX <= 50 && velX >= -50) {
+      player.anims.play("turn");
+    } else if (velX > 10) {
+      player.anims.play("right");
+    } else if (velX < -10) {
+      player.anims.play("left");
+    }
   }
 
   createAnimation(scene) {
