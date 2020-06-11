@@ -9,9 +9,9 @@ export default class Menu {
   }
   init() {
     //  The score
-    this.scoreText = this.scene.add.text(16, 16, "score: " + this.score, {
+    this.scoreText = this.scene.add.text(10, 50, "Score: " + this.score, {
       fontSize: "32px",
-      fill: "#000",
+      fill: "#FFF",
     });
   }
 }

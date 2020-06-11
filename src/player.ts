@@ -1,7 +1,7 @@
 import { bombConfig } from "./collactable";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   scene: Phaser.Scene;
-  stepWidth: number;
+  speed: number;
   jumpHeight: number;
   accelartion: number;
   direction: number;
@@ -36,25 +36,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.setDamping(true);
     this.setDrag(0.98, 1);
     // this.debugShowVelocity = true;
-    this.stepWidth = 160;
+    this.speed = 160;
     this.jumpHeight = -330;
     this.accelartion = 500;
     this.direction = 1;
     // this.init();
   }
   init() {}
-  bounce() {
-    let scene: any = this.scene;
-    let width = scene.map.width;
-    let height = scene.map.height;
-    this.direction *= -1;
-
-    // if (this.x >= width && this.direction > 0) {
-    //   console.log("sdf");
-
-    //   this.direction *= -1;
-    // }
-  }
   collectStar(player, obj) {
     let scene: any = player.scene;
     let bombs: any = scene.bombs;
@@ -94,6 +82,18 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // if (cursors.up.isDown && this.body.touching.down) {
     //   this.setVelocityY(this.jumpHeight);
     // }
+  }
+  handleCollision(player, layer) {
+    let blockedDown = player.body.blocked.down;
+    let blockedLeft = player.body.blocked.left;
+    let blockedRight = player.body.blocked.right;
+    if (blockedRight) {
+      this.direction = -1;
+    }
+    if (blockedLeft) {
+      this.direction = 1;
+    }
+    console.log(this.direction);
   }
 
   createAnimation(scene) {

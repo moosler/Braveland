@@ -1,7 +1,7 @@
 export let starConfig = {
   key: "star",
   repeat: 1,
-  setXY: { x: 12, y: 0, stepX: 70 },
+  setXY: { x: 100, y: 0, stepX: 70 },
 };
 
 export let bombConfig = {
