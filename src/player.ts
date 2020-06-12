@@ -44,27 +44,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     // this.init();
   }
   init() {}
-  collectStar(player, obj) {
-    let scene: any = player.scene;
-    let bombs: any = scene.bombs;
-    let stars: any = scene.stars.object;
-    let menu: any = scene.menu;
-    let text: any = menu.scoreText;
-    obj.disableBody(true, true);
-    menu.score += 10;
-    text.setText("Score: " + menu.score);
-    if (stars.countActive(true) === 0) {
-      stars.children.iterate(function (child) {
-        child.enableBody(true, child.x, 0, true, true);
-      });
-      var x =
-        this.x < 400
-          ? Phaser.Math.Between(400, 800)
-          : Phaser.Math.Between(0, 400);
-
-      bombs.create(x, 16, bombConfig);
-    }
-  }
   hitBomb(player, obj) {
     let scene: any = player.scene;
     scene.physics.pause();
@@ -86,31 +65,37 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
   jump() {
     this.body.velocity.y = -this.jumpHeight;
   }
-  handleCollision(player, layer) {
-    let blockedDown = player.body.blocked.down;
-    let blockedLeft = player.body.blocked.left;
-    let blockedRight = player.body.blocked.right;
+
+  handlePalyerHitsTile() {
+    let blockedDown = this.body.blocked.down;
+    let blockedLeft = this.body.blocked.left;
+    let blockedRight = this.body.blocked.right;
     if (blockedRight) {
-      player.direction = -1;
+      this.direction = -1;
     }
     if (blockedLeft) {
-      player.direction = 1;
+      this.direction = 1;
     }
-    let velX = player.body.velocity.x;
+    let velX = this.body.velocity.x;
 
     //Animations
     if (velX <= 50 && velX >= -50) {
-      player.anims.play("turn");
+      this.anims.play("turn");
       // player.body.velocity.x = 0;
     } else if (velX > 10) {
-      player.anims.play("right");
+      this.anims.play("right");
     } else if (velX < -10) {
-      player.anims.play("left");
+      this.anims.play("left");
     }
+  }
+
+  handleCollision(player, layer) {
+    player.handlePalyerHitsTile();
   }
 
   handleDynamicCollision(player, layer) {
     console.log("collision2");
+    player.handlePalyerHitsTile();
   }
 
   createAnimation(scene) {
