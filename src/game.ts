@@ -3,15 +3,16 @@
  */
 
 import "phaser";
-import preloadScene from "./preloadScene";
-import mainScene from "./mainScene";
+import preloadScene from "./Scenes/preload";
+import mainScene from "./Scenes/main";
+import uiScene from "./Scenes/ui";
 
 const config = {
   type: Phaser.AUTO,
   backgroundColor: "#444444",
   width: 800,
   height: 600,
-  scene: [preloadScene, mainScene],
+  scene: [preloadScene, mainScene, uiScene],
   parent: "Braveland",
   scale: {
     mode: Phaser.Scale.FIT,

@@ -1,23 +1,9 @@
-import { bombConfig } from "./collactable";
 export default class Player extends Phaser.Physics.Arcade.Sprite {
   scene: Phaser.Scene;
   speed: number;
   jumpHeight: number;
   accelartion: number;
   direction: number;
-
-  /**
-   * 
-    var group = this.physics.add.group({
-        key: 'ball',
-        frameQuantity: 48,
-        bounceX: 1,
-        bounceY: 1,
-        collideWorldBounds: true,
-        velocityX: 180,
-        velocityY: 120,
-    });
-   */
 
   constructor(scene, x, y, textureName) {
     super(scene, x, y, textureName);

@@ -20,26 +20,16 @@ export default class Map {
     let total = tile.total;
     this.staticLayer = this.tilemap.createStaticLayer("Plattform", tile);
     this.staticLayer.setCollisionBetween(1, 3);
-
     // this.staticLayer.setTileIndexCallback(1, this.collision, this);
+    // this.staticLayer.setCollisionByExclusion([-1]);
 
     //add dynamic layer
     let moveObjects = this.tilemap.addTilesetImage(
       "kenny_set",
       "movingObjects"
     );
-    this.objectLayer = this.tilemap.createDynamicLayer("Objects", moveObjects);
-    // this.objectLayer.setCollision([280, 281, 308, 309]);
-    let start1 = total + 280 + 1;
-    let end1 = total + 281 + 1;
-    let start2 = total + 308 + 1;
-    let end2 = total + 309 + 1;
-    this.objectLayer.setCollisionBetween(start1, end1);
-    this.objectLayer.setCollisionBetween(start2, end2);
-    this.objectLayer.setTileIndexCallback(start1, this.collision, this);
 
     // this.blockedLayer.setCollisionByExclusion([-1]);
-
     // https://stackabuse.com/phaser-3-and-tiled-building-a-platformer/
     // https://phaser.io/examples/v3/view/game-objects/tilemap/static/tileset-collision-shapes#
     // https://labs.phaser.io/edit.html?src=src/game%20objects/tilemap/collision/tile%20callbacks.js&v=3.23.0
