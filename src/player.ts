@@ -21,6 +21,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     this.createAnimation(this.scene);
     this.setDamping(true);
     this.setDrag(0.97, 1);
+    this.setGravityY(300);
     // this.debugShowVelocity = true;
     this.speed = 160;
     this.jumpHeight = 330;

@@ -11,7 +11,11 @@ export default class preloadScene extends Phaser.Scene {
     this.load.image("star", "assets/star.png");
     this.load.image("bomb", "assets/bomb.png");
     this.load.image("tile", "assets/tile.png");
-    this.load.image("movingObjects", "assets/platformPack_tilesheet.png");
+    this.load.spritesheet(
+      "movingObjects",
+      "assets/platformPack_tilesheet.png",
+      { frameWidth: 32, frameHeight: 32 }
+    );
     this.load.tilemapTiledJSON("level", "assets/maps/level1.json");
   }
   create() {

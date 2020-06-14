@@ -26,6 +26,8 @@ export default class Collactables extends Phaser.Physics.Arcade.Group {
     this.scene.physics.world.enable(obj);
     obj.body.setCollideWorldBounds(true);
     obj.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    obj.body.setGravityY(300);
+
     this.scene.add.existing(obj);
   }
 }

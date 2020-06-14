@@ -31,6 +31,8 @@ export default class Enemies extends Phaser.Physics.Arcade.Group {
     obj.body.setCollideWorldBounds(true);
     obj.body.setBounce(1);
     obj.body.setVelocity(Phaser.Math.Between(-50, 50), 20);
+    obj.body.setGravityY(300);
+
     // obj.body.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
     this.scene.add.existing(obj);
   }

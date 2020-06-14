@@ -1,9 +1,8 @@
 import Player from "../player";
 import Map from "../map";
-// import Collactable from "../collactable";
 import Collactables from "../collactables";
 import Enemies from "../enemies";
-// import { starConfig } from "../collactable";
+import MoveGroup from "../Groups/moveGroup";
 
 const SPIKE_TILE = 2;
 const JUMP_TILE = 3;
@@ -20,6 +19,8 @@ export default class MainScene extends Phaser.Scene {
   collactablesGroup: Collactables;
   bombs: Phaser.GameObjects.Sprite[];
   enemiesGroup: Enemies;
+  mobileGroup: MoveGroup;
+  movable: Phaser.GameObjects.Sprite[];
 
   constructor() {
     super("Mainscene");
@@ -54,9 +55,6 @@ export default class MainScene extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, this.map.width, this.map.height);
     this.physics.world.setBoundsCollision(true, true, true, false);
 
-    let temp = this.map.tilemap.getTileset("Collactables");
-    console.log(temp);
-
     //Collectables
     this.stars = this.map.tilemap.createFromObjects("Collactables", "star", {
       key: "star",
@@ -74,17 +72,17 @@ export default class MainScene extends Phaser.Scene {
     });
     this.enemiesGroup = new Enemies(this.physics.world, this, [], this.bombs);
 
+    //Moveables
+    this.movable = this.map.tilemap.createFromObjects("Move", "spike", {});
+    this.mobileGroup = new MoveGroup(
+      this.physics.world,
+      this,
+      [],
+      this.movable
+    );
+
     //Camera
     this.cameras.main.startFollow(this.player, true, 0.05, 0.05);
-
-    // //  Here we create our coins group
-    // let tmp = new Phaser.Physics.Arcade.Group(this.physics.world, this);
-    // // this.physics.world.enable(tmp);
-    // let spr = this.physics.add.sprite(260, 0, "bomb");
-    // this.physics.world.enable(spr);
-    // tmp.add(spr);
-    // spr.setBounce(1);
-    // this.physics.add.collider(tmp, this.map.staticLayer);
 
     //Collision
     this.addCollisions();
@@ -112,6 +110,10 @@ export default class MainScene extends Phaser.Scene {
       null,
       this
     );
+
+    //  Player => Movable
+    this.physics.add.overlap(this.player, this.mobileGroup);
+
     //  Player => Collactables Stars, Coins,
     this.physics.add.overlap(
       this.collactablesGroup,
