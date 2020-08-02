@@ -4,8 +4,10 @@ import Collactables from "../collactables";
 import Enemies from "../enemies";
 import MoveGroup from "../Groups/moveGroup";
 
-const SPIKE_TILE = 2;
-const JUMP_TILE = 3;
+const SLOW_TILE = 2;
+const FINISH_TILE = 3;
+const SPEED_TILE = 4;
+const JUMP_TILE = 5;
 
 export default class MainScene extends Phaser.Scene {
   player: Player;
@@ -37,7 +39,7 @@ export default class MainScene extends Phaser.Scene {
 
     //  Input Events
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.input.keyboard.on("keydown_d", this.drawDebug, this);
+    this.input.keyboard.on("keydown-d", this.drawDebug, this);
     /** Second Variation to create Key Codes */
     // this.spaceKey = this.input.keyboard.addKey(
     //   Phaser.Input.Keyboard.KeyCodes.SPACE
@@ -110,9 +112,15 @@ export default class MainScene extends Phaser.Scene {
       null,
       this
     );
+    //  Player => Movables
+    // this.physics.add.collider(this.mobileGroup, this.player);
 
     //  Player => Movable
-    this.physics.add.overlap(this.player, this.mobileGroup);
+    this.physics.add.overlap(
+      this.player,
+      this.mobileGroup,
+      this.player.hit.bind(this.player)
+    );
 
     //  Player => Collactables Stars, Coins,
     this.physics.add.overlap(
@@ -134,7 +142,7 @@ export default class MainScene extends Phaser.Scene {
       this.state = true;
       console.log("you died");
       this.scene.pause();
-    } else if (tile.index === SPIKE_TILE) {
+    } else if (tile.index === SLOW_TILE) {
     } else if (tile.index === JUMP_TILE) {
       // this.player.jump();
     }

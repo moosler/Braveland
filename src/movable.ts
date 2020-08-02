@@ -4,8 +4,7 @@ export default class Moveable extends Phaser.Physics.Arcade.Sprite {
   constructor(scene, x, y, frame) {
     super(scene, x, y, "movingObjects", frame);
     this.scene = scene;
-    this.moveSpeed = 100;
-    console.log(this.body);
+    this.moveSpeed = 50;
 
     // enable physics
     this.scene.physics.world.enable(this);

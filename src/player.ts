@@ -38,6 +38,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     player.anims.play("turn");
     scene.state = true;
   }
+
+  hit(player, obj) {
+    // obj.destroy();
+    this.scene.scene.start("gameOverScene");
+    this.scene.scene.stop("UIScene");
+    // player.destroy();
+  }
   move(cursors) {
     if (cursors.space.isDown) {
       this.setAccelerationX(this.accelartion * this.direction);
