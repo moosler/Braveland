@@ -1,6 +1,6 @@
 # Description
 
-Braveland is a simple platform game.
+Braveland is a simple platform game like Darkland.
 By guiding the Hero through the wild landscape of BraveLand.
 
 ## FEATURES
